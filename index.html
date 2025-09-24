@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Узнай бога Древнего Египта</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0e6d2;
+            color: #5c4b37;
+            text-align: center;
+            padding: 20px;
+            background-image: url('https://img.freepik.com/free-vector/egyptian-pattern-design_1390-310.jpg?size=626&ext=jpg');
+            background-size: cover;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 248, 225, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #d4b483;
+        }
+        
+        h1 {
+            color: #8b4513;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .game-info {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .card {
+            display: none;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff8e1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #d4b483;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .god-image {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 15px auto;
+            border-radius: 10px;
+            border: 2px solid #8b4513;
+        }
+        
+        .description {
+            font-size: 1.1em;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 10px;
+            background-color: #d4b483;
+            color: #5c4b37;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        
+        .option:hover {
+            background-color: #c19a6b;
+        }
+        
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            min-height: 30px;
+        }
+        
+        .correct {
+            color: #2e7d32;
+        }
+        
+        .incorrect {
+            color: #c62828;
+        }
+        
+        .score {
+            font-size: 1.3em;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #6b3300;
+        }
+        
+        .hint {
+            font-style: italic;
+            color: #7d5d3b;
+            margin-top: 10px;
+        }
+        
+        .final-screen {
+            display: none;
+            padding: 30px;
+        }
+        
+        .final-score {
+            font-size: 2em;
+            color: #8b4513;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Узнай бога Древнего Египта</h1>
+        
+        <div id="start-screen">
+            <div class="game-info">
+                <p>Проверьте свои знания о богах Древнего Египта!</p>
+                <p>Вам будет показано изображение и описание бога. Выберите правильный вариант ответа из четырех предложенных.</p>
+                <p>Всего в викторине 10 вопросов. Постарайтесь набрать как можно больше очков!</p>
+            </div>
+            <button id="start-btn">Начать игру</button>
+        </div>
+        
+        <div id="game-screen" class="card">
+            <div class="score">Счет: <span id="current-score">0</span>/10</div>
+            <div id="question-number">Вопрос 1 из 10</div>
+            <img id="god-image" class="god-image" src="" alt="Изображение бога">
+            <div id="description" class="description"></div>
+            <div class="options" id="options-container"></div>
+            <div id="result" class="result"></div>
+            <div class="hint" id="hint"></div>
+            <div class="controls">
+                <button id="next-btn" style="display: none;">Следующий вопрос</button>
+            </div>
+        </div>
+        
+        <div id="final-screen" class="final-screen card">
+            <h2>Викторина завершена!</h2>
+            <div class="final-score">Ваш результат: <span id="final-score">0</span>/10</div>
+            <div id="final-message"></div>
+            <button id="restart-btn">Играть снова</button>
+        </div>
+    </div>
+
+    <script>
+        // База данных богов Древнего Египта на основе предоставленного материала
+        const gods = [
+            {
+                name: "Ра",
+                description: "Бог солнца, верховный бог египетского пантеона. Часто изображался с головой сокола и солнечным диском.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/ra-136x300.png",
+                hint: "Его имя означает 'солнце'."
+            },
+            {
+                name: "Осирис",
+                description: "Бог возрождения, царь загробного мира. Символизирует смерть и воскресение.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/osiris-138x300.png",
+                hint: "Изображался в виде мумии с короной и посохом."
+            },
+            {
+                name: "Исида",
+                description: "Богиня материнства, плодородия и магии. Жена Осириса, мать Гора.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/isida-136x300.png",
+                hint: "Часто изображалась с троном на голове."
+            },
+            {
+                name: "Гор",
+                description: "Бог неба и солнца, покровитель фараонов. Сын Осириса и Исиды.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/gor.png",
+                hint: "Обычно изображался с головой сокола."
+            },
+            {
+                name: "Анубис",
+                description: "Бог бальзамирования и загробного мира. Покровитель умерших.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/anubis-140x300.png",
+                hint: "Изображался с головой шакала."
+            },
+            {
+                name: "Тот",
+                description: "Бог мудрости, знаний и письменности. Считался изобретателем иероглифов.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/tot-155x300.png",
+                hint: "Часто изображался с головой ибиса."
+            },
+            {
+                name: "Сет",
+                description: "Бог пустыни, грозы и хаоса. Брат Осириса, убийца и противник Гора.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/set-144x300.png",
+                hint: "Изображался с головой мифического животного."
+            },
+            {
+                name: "Бастет",
+                description: "Богиня радости, веселья, любви, женской красоты и домашнего очага.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/bastet-149x300.png",
+                hint: "Изображалась в виде кошки или женщины с кошачьей головой."
+            },
+            {
+                name: "Птах",
+                description: "Бог-творец, покровитель искусств и ремесел. Считался создателем мира.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/ptah-145x300.png",
+                hint: "Изображался в виде мумии с посохом. Он сотворил всех остальных богов и мир своим магическим словом (называя имена всего сущего). Чтился в г. Мемфис в образе человека, все тело которого скрыто под особой одеждой"
+            },
+            {
+                name: "Сехмет",
+                description: "Богиня войны, палящего солнца и возмездия. Изображалась с головой львицы.",
+                image: "https://civilka.ru/wp-content/uploads/2014/09/sohmet-137x300.png",
+                hint: "Её имя означает 'могучая'."
+            }
+        ];
+
+        // Элементы DOM
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const finalScreen = document.getElementById('final-screen');
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const godImage = document.getElementById('god-image');
+        const descriptionEl = document.getElementById('description');
+        const optionsContainer = document.getElementById('options-container');
+        const resultEl = document.getElementById('result');
+        const hintEl = document.getElementById('hint');
+        const questionNumberEl = document.getElementById('question-number');
+        const currentScoreEl = document.getElementById('current-score');
+        const finalScoreEl = document.getElementById('final-score');
+        const finalMessageEl = document.getElementById('final-message');
+
+        // Игровые переменные
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let usedGods = [];
+
+        // Начало игры
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', startGame);
+
+        // Функция начала игры
+        function startGame() {
+            startScreen.style.display = 'none';
+            gameScreen.classList.add('active');
+            finalScreen.style.display = 'none';
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            usedGods = [];
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Показать вопрос
+        function showQuestion() {
+            // Выбрать случайного бога, который еще не использовался
+            let availableGods = gods.filter(god => !usedGods.includes(god.name));
+            if (availableGods.length === 0) {
+                endGame();
+                return;
+            }
+            
+            const randomGod = availableGods[Math.floor(Math.random() * availableGods.length)];
+            usedGods.push(randomGod.name);
+            
+            // Обновить интерфейс
+            questionNumberEl.textContent = `Вопрос ${currentQuestionIndex + 1} из 10`;
+            godImage.src = randomGod.image;
+            descriptionEl.textContent = randomGod.description;
+            hintEl.textContent = `Подсказка: ${randomGod.hint}`;
+            
+            // Создать варианты ответов
+            const options = [randomGod.name];
+            
+            // Добавить 3 случайных неправильных ответа
+            while (options.length < 4) {
+                const randomOption = gods[Math.floor(Math.random() * gods.length)].name;
+                if (!options.includes(randomOption)) {
+                    options.push(randomOption);
+                }
+            }
+            
+            // Перемешать варианты ответов
+            shuffleArray(options);
+            
+            // Очистить контейнер с вариантами
+            optionsContainer.innerHTML = '';
+            
+            // Создать кнопки для каждого варианта ответа
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option');
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(option, randomGod.name));
+                optionsContainer.appendChild(button);
+            });
+            
+            // Сбросить результат и скрыть кнопку "Далее"
+            resultEl.textContent = '';
+            resultEl.className = 'result';
+            nextBtn.style.display = 'none';
+        }
+
+        // Проверить ответ
+        function checkAnswer(selectedOption, correctAnswer) {
+            // Отключить все кнопки вариантов
+            const optionButtons = document.querySelectorAll('.option');
+            optionButtons.forEach(button => {
+                button.disabled = true;
+                if (button.textContent === correctAnswer) {
+                    button.style.backgroundColor = '#4caf50';
+                } else if (button.textContent === selectedOption && selectedOption !== correctAnswer) {
+                    button.style.backgroundColor = '#f44336';
+                }
+            });
+            
+            // Показать результат
+            if (selectedOption === correctAnswer) {
+                resultEl.textContent = 'Правильно!';
+                resultEl.className = 'result correct';
+                score++;
+                updateScore();
+            } else {
+                resultEl.textContent = `Неправильно! Правильный ответ: ${correctAnswer}`;
+                resultEl.className = 'result incorrect';
+            }
+            
+            // Показать кнопку "Следующий вопрос"
+            nextBtn.style.display = 'inline-block';
+        }
+
+        // Следующий вопрос
+        nextBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < 10) {
+                showQuestion();
+            } else {
+                endGame();
+            }
+        });
+
+        // Завершение игры
+        function endGame() {
+            gameScreen.classList.remove('active');
+            finalScreen.style.display = 'block';
+            
+            finalScoreEl.textContent = score;
+            
+            // Сообщение в зависимости от результата
+            if (score >= 9) {
+                finalMessageEl.textContent = 'Отличный результат! Вы настоящий эксперт по мифологии Древнего Египта!';
+            } else if (score >= 7) {
+                finalMessageEl.textContent = 'Хороший результат! Вы хорошо разбираетесь в египетских богах.';
+            } else if (score >= 5) {
+                finalMessageEl.textContent = 'Неплохой результат! Но есть куда стремиться.';
+            } else {
+                finalMessageEl.textContent = 'Попробуйте еще раз! Изучите материал и возвращайтесь!';
+            }
+        }
+
+        // Обновление счета
+        function updateScore() {
+            currentScoreEl.textContent = score;
+        }
+
+        // Функция для перемешивания массива (алгоритм Фишера-Йейтса)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
