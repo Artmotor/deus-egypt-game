@@ -7,16 +7,20 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
+            background-color: #f0e6d2;
             color: #5c4b37;
             text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #f0e6d2 0%, #d4b483 50%, #8b4513 100%);
+ background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,95 T20,80 T0,50 T20,20 Z" fill="%238b4513"/><circle cx="50" cy="50" r="15" fill="%23d4b483"/></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" opacity="0.05"><polygon points="40,5 75,75 5,75" fill="%235c4b37"/></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" opacity="0.08"><path d="M30,5 C45,5 55,20 55,35 C55,50 45,55 30,55 C15,55 5,50 5,35 C5,20 15,5 30,5 Z" fill="%238b4513"/></svg>');
+            
+            background-size: cover;
             position: relative;
             min-height: 100vh;
-            overflow-x: hidden;
         }
         
-        /* Египетские символы как фон */
         body::before {
             content: '';
             position: absolute;
@@ -24,105 +28,47 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,95 T20,80 T0,50 T20,20 Z" fill="%238b4513"/><circle cx="50" cy="50" r="15" fill="%23d4b483"/></svg>'),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" opacity="0.05"><polygon points="40,5 75,75 5,75" fill="%235c4b37"/></svg>'),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" opacity="0.08"><path d="M30,5 C45,5 55,20 55,35 C55,50 45,55 30,55 C15,55 5,50 5,35 C5,20 15,5 30,5 Z" fill="%238b4513"/></svg>');
-            background-size: 100px 100px, 80px 80px, 60px 60px;
-            background-position: 0 0, 30px 60px, 70px 20px;
-            z-index: -2;
-        }
-        
-        /* Пирамиды и сфинкс как декоративные элементы */
-        .egypt-decoration {
-            position: absolute;
+            background-image: url('https://img.freepik.com/free-vector/egyptian-landscape-with-pyramids-sphinx_107791-18185.jpg?size=626&ext=jpg');
+            background-size: cover;
+            opacity: 0.3;
             z-index: -1;
-            opacity: 0.15;
-        }
-        
-        .pyramid-left {
-            bottom: 0;
-            left: 0;
-            width: 200px;
-            height: 150px;
-            background: linear-gradient(to bottom right, transparent 50%, #8b4513 50%);
-            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
-        }
-        
-        .pyramid-right {
-            bottom: 0;
-            right: 0;
-            width: 150px;
-            height: 120px;
-            background: linear-gradient(to bottom left, transparent 50%, #5c4b37 50%);
-            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
-        }
-        
-        .sphinx {
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 100px;
-            background: #5c4b37;
-            border-radius: 50% 50% 0 0;
-            position: relative;
-        }
-        
-        .sphinx::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 40px;
-            background: #d4b483;
-            border-radius: 50%;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 248, 225, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 3px solid #d4b483;
+            background-color: rgba(255, 248, 225, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #d4b483;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(5px);
         }
         
         h1 {
             color: #8b4513;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            font-size: 2.8em;
-            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 2.5em;
+            margin-bottom: 20px;
             background: linear-gradient(45deg, #8b4513, #d4b483);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: bold;
         }
         
-        /* Остальные стили остаются такими же, как в предыдущей версии */
         .game-info {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 1.2em;
             line-height: 1.6;
-            background: rgba(212, 180, 131, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #8b4513;
         }
         
         .card {
             display: none;
-            margin: 25px auto;
-            padding: 25px;
-            background: #fff8e1;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff8e1;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border: 2px solid #d4b483;
         }
         
@@ -131,28 +77,198 @@
         }
         
         .god-image {
-            max-width: 220px;
-            max-height: 220px;
-            margin: 20px auto;
-            border-radius: 12px;
-            border: 3px solid #8b4513;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            max-width: 200px;
+            max-height: 200px;
+            margin: 15px auto;
+            border-radius: 10px;
+            border: 2px solid #8b4513;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        .god-image:hover {
-            transform: scale(1.05);
+        .description {
+            font-size: 1.1em;
+            margin: 15px 0;
+            line-height: 1.5;
+            background-color: rgba(212, 180, 131, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #8b4513;
         }
         
-        /* ... остальные стили ... */
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 12px;
+            background-color: #d4b483;
+            color: #5c4b37;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .option:hover {
+            background-color: #c19a6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            min-height: 30px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .correct {
+            color: #2e7d32;
+            background-color: rgba(46, 125, 50, 0.1);
+            border: 1px solid #2e7d32;
+        }
+        
+        .incorrect {
+            color: #c62828;
+            background-color: rgba(198, 40, 40, 0.1);
+            border: 1px solid #c62828;
+        }
+        
+        .score {
+            font-size: 1.3em;
+            margin: 15px 0;
+            font-weight: bold;
+            background-color: rgba(139, 69, 19, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: #6b3300;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hint {
+            font-style: italic;
+            color: #7d5d3b;
+            margin-top: 10px;
+            background-color: rgba(125, 93, 59, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #7d5d3b;
+        }
+        
+        .final-screen {
+            display: none;
+            padding: 30px;
+        }
+        
+        .final-score {
+            font-size: 2em;
+            color: #8b4513;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .share-buttons {
+            margin: 20px 0;
+        }
+        
+        .share-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #3b5998;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .share-btn.vk { background-color: #4a76a8; }
+        .share-btn.telegram { background-color: #0088cc; }
+        .share-btn.twitter { background-color: #1da1f2; }
+        
+        .share-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .other-games {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #d4b483;
+        }
+        
+        .game-link {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(139, 69, 19, 0.1);
+            color: #5c4b37;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .game-link:hover {
+            background-color: rgba(139, 69, 19, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .share-result {
+            background-color: rgba(46, 125, 50, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #2e7d32;
+        }
+        
+        .share-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .copy-btn {
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
-    <!-- Декоративные элементы -->
-    <div class="egypt-decoration pyramid-left"></div>
-    <div class="egypt-decoration pyramid-right"></div>
-    <div class="egypt-decoration sphinx"></div>
-    
     <div class="container">
         <h1>𓂀 Узнай бога Древнего Египта 𓂀</h1>
         
@@ -162,10 +278,9 @@
                 <p>Вам будет показано изображение и описание бога. Выберите правильный вариант ответа из четырех предложенных.</p>
                 <p>Всего в викторине 10 вопросов. Постарайтесь набрать как можно больше очков!</p>
             </div>
-            <button id="start-btn">𓋹 Начать игру 𓋹</button>
+            <button id="start-btn">Начать игру</button>
         </div>
         
-        <!-- Остальная часть игры остается без изменений -->
         <div id="game-screen" class="card">
             <div class="score">Счет: <span id="current-score">0</span>/10</div>
             <div id="question-number">Вопрос 1 из 10</div>
@@ -187,7 +302,7 @@
             <div class="share-result">
                 <div class="share-text">Поделиться результатом:</div>
                 <div>
-                    <input type="text" id="share-text" readonly style="width: 70%; padding: 10px; border: 2px solid #d4b483; border-radius: 8px; font-size: 14px;">
+                    <input type="text" id="share-text" readonly style="width: 70%; padding: 8px; border: 1px solid #d4b483; border-radius: 4px;">
                     <button class="copy-btn" id="copy-btn">Копировать</button>
                 </div>
             </div>
@@ -195,6 +310,7 @@
             <div class="share-buttons">
                 <a href="#" class="share-btn vk" id="share-vk">VK</a>
                 <a href="#" class="share-btn telegram" id="share-tg">Telegram</a>
+                <a href="#" class="share-btn twitter" id="share-tw">Twitter</a>
             </div>
             
             <div class="controls">
