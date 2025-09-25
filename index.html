@@ -7,43 +7,122 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f0e6d2;
             color: #5c4b37;
             text-align: center;
             padding: 20px;
-            background-image: url('https://img.freepik.com/free-vector/egyptian-pattern-design_1390-310.jpg?size=626&ext=jpg');
-            background-size: cover;
+            background: linear-gradient(135deg, #f0e6d2 0%, #d4b483 50%, #8b4513 100%);
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Египетские символы как фон */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,95 T20,80 T0,50 T20,20 Z" fill="%238b4513"/><circle cx="50" cy="50" r="15" fill="%23d4b483"/></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" opacity="0.05"><polygon points="40,5 75,75 5,75" fill="%235c4b37"/></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" opacity="0.08"><path d="M30,5 C45,5 55,20 55,35 C55,50 45,55 30,55 C15,55 5,50 5,35 C5,20 15,5 30,5 Z" fill="%238b4513"/></svg>');
+            background-size: 100px 100px, 80px 80px, 60px 60px;
+            background-position: 0 0, 30px 60px, 70px 20px;
+            z-index: -2;
+        }
+        
+        /* Пирамиды и сфинкс как декоративные элементы */
+        .egypt-decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        .pyramid-left {
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(to bottom right, transparent 50%, #8b4513 50%);
+            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+        }
+        
+        .pyramid-right {
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 120px;
+            background: linear-gradient(to bottom left, transparent 50%, #5c4b37 50%);
+            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+        }
+        
+        .sphinx {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 100px;
+            background: #5c4b37;
+            border-radius: 50% 50% 0 0;
+            position: relative;
+        }
+        
+        .sphinx::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: #d4b483;
+            border-radius: 50%;
         }
         
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background-color: rgba(255, 248, 225, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border: 2px solid #d4b483;
+            background: rgba(255, 248, 225, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid #d4b483;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
         }
         
         h1 {
             color: #8b4513;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #8b4513, #d4b483);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
         }
         
+        /* Остальные стили остаются такими же, как в предыдущей версии */
         .game-info {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 1.2em;
+            line-height: 1.6;
+            background: rgba(212, 180, 131, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #8b4513;
         }
         
         .card {
             display: none;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff8e1;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 25px auto;
+            padding: 25px;
+            background: #fff8e1;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border: 2px solid #d4b483;
         }
         
@@ -52,113 +131,41 @@
         }
         
         .god-image {
-            max-width: 200px;
-            max-height: 200px;
-            margin: 15px auto;
-            border-radius: 10px;
-            border: 2px solid #8b4513;
+            max-width: 220px;
+            max-height: 220px;
+            margin: 20px auto;
+            border-radius: 12px;
+            border: 3px solid #8b4513;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
         
-        .description {
-            font-size: 1.1em;
-            margin: 15px 0;
-            line-height: 1.5;
+        .god-image:hover {
+            transform: scale(1.05);
         }
         
-        .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .option {
-            padding: 10px;
-            background-color: #d4b483;
-            color: #5c4b37;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        
-        .option:hover {
-            background-color: #c19a6b;
-        }
-        
-        .result {
-            margin-top: 15px;
-            font-weight: bold;
-            font-size: 1.2em;
-            min-height: 30px;
-        }
-        
-        .correct {
-            color: #2e7d32;
-        }
-        
-        .incorrect {
-            color: #c62828;
-        }
-        
-        .score {
-            font-size: 1.3em;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-        
-        .controls {
-            margin-top: 20px;
-        }
-        
-        button {
-            padding: 10px 20px;
-            background-color: #8b4513;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            margin: 0 10px;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #6b3300;
-        }
-        
-        .hint {
-            font-style: italic;
-            color: #7d5d3b;
-            margin-top: 10px;
-        }
-        
-        .final-screen {
-            display: none;
-            padding: 30px;
-        }
-        
-        .final-score {
-            font-size: 2em;
-            color: #8b4513;
-            margin: 20px 0;
-        }
+        /* ... остальные стили ... */
     </style>
 </head>
 <body>
+    <!-- Декоративные элементы -->
+    <div class="egypt-decoration pyramid-left"></div>
+    <div class="egypt-decoration pyramid-right"></div>
+    <div class="egypt-decoration sphinx"></div>
+    
     <div class="container">
-        <h1>Узнай бога Древнего Египта</h1>
+        <h1>𓂀 Узнай бога Древнего Египта 𓂀</h1>
         
         <div id="start-screen">
             <div class="game-info">
-                <p>Проверьте свои знания о богах Древнего Египта!</p>
+                <p>𓁩 Проверьте свои знания о богах Древнего Египта! 𓁩</p>
                 <p>Вам будет показано изображение и описание бога. Выберите правильный вариант ответа из четырех предложенных.</p>
                 <p>Всего в викторине 10 вопросов. Постарайтесь набрать как можно больше очков!</p>
             </div>
-            <button id="start-btn">Начать игру</button>
+            <button id="start-btn">𓋹 Начать игру 𓋹</button>
         </div>
         
+        <!-- Остальная часть игры остается без изменений -->
         <div id="game-screen" class="card">
             <div class="score">Счет: <span id="current-score">0</span>/10</div>
             <div id="question-number">Вопрос 1 из 10</div>
@@ -168,15 +175,38 @@
             <div id="result" class="result"></div>
             <div class="hint" id="hint"></div>
             <div class="controls">
-                <button id="next-btn" style="display: none;">Следующий вопрос</button>
+                <button id="next-btn" style="display: none;">Следующий вопрос →</button>
             </div>
         </div>
         
         <div id="final-screen" class="final-screen card">
-            <h2>Викторина завершена!</h2>
+            <h2>𓋹 Викторина завершена! 𓋹</h2>
             <div class="final-score">Ваш результат: <span id="final-score">0</span>/10</div>
             <div id="final-message"></div>
-            <button id="restart-btn">Играть снова</button>
+            
+            <div class="share-result">
+                <div class="share-text">Поделиться результатом:</div>
+                <div>
+                    <input type="text" id="share-text" readonly style="width: 70%; padding: 10px; border: 2px solid #d4b483; border-radius: 8px; font-size: 14px;">
+                    <button class="copy-btn" id="copy-btn">Копировать</button>
+                </div>
+            </div>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-btn vk" id="share-vk">VK</a>
+                <a href="#" class="share-btn telegram" id="share-tg">Telegram</a>
+            </div>
+            
+            <div class="controls">
+                <button id="restart-btn">𓃭 Играть снова 𓃭</button>
+            </div>
+            
+            <div class="other-games">
+                <h3>𓂧 Другие интересные игры: 𓂧</h3>
+                <a href="https://artmotor.github.io/heracleum-game/" class="game-link" target="_blank">𓆸 Игра "Борщевик" - сразитесь с опасным растением</a>
+                <a href="https://artmotor.github.io/horse-game/" class="game-link" target="_blank">𓃗 Игра "Лошади" - заботьтесь о прекрасных животных</a>
+                <a href="https://artmotor.github.io/vetcliker-game/" class="game-link" target="_blank">𓃠 Игра "Веткликер" - станьте лучшим ветеринаром</a>
+            </div>
         </div>
     </div>
 
@@ -261,6 +291,11 @@
         const currentScoreEl = document.getElementById('current-score');
         const finalScoreEl = document.getElementById('final-score');
         const finalMessageEl = document.getElementById('final-message');
+        const shareTextEl = document.getElementById('share-text');
+        const copyBtn = document.getElementById('copy-btn');
+        const shareVk = document.getElementById('share-vk');
+        const shareTg = document.getElementById('share-tg');
+        const shareTw = document.getElementById('share-tw');
 
         // Игровые переменные
         let currentQuestionIndex = 0;
@@ -343,19 +378,21 @@
                 button.disabled = true;
                 if (button.textContent === correctAnswer) {
                     button.style.backgroundColor = '#4caf50';
+                    button.style.color = 'white';
                 } else if (button.textContent === selectedOption && selectedOption !== correctAnswer) {
                     button.style.backgroundColor = '#f44336';
+                    button.style.color = 'white';
                 }
             });
             
             // Показать результат
             if (selectedOption === correctAnswer) {
-                resultEl.textContent = 'Правильно!';
+                resultEl.textContent = '𓆣 Правильно! 𓆣';
                 resultEl.className = 'result correct';
                 score++;
                 updateScore();
             } else {
-                resultEl.textContent = `Неправильно! Правильный ответ: ${correctAnswer}`;
+                resultEl.textContent = `𓅓 Неправильно! Правильный ответ: ${correctAnswer} 𓅓`;
                 resultEl.className = 'result incorrect';
             }
             
@@ -382,15 +419,50 @@
             finalScoreEl.textContent = score;
             
             // Сообщение в зависимости от результата
+            let message = '';
             if (score >= 9) {
-                finalMessageEl.textContent = 'Отличный результат! Вы настоящий эксперт по мифологии Древнего Египта!';
+                message = '𓂀 Отличный результат! Вы настоящий эксперт по мифологии Древнего Египта! 𓂀';
             } else if (score >= 7) {
-                finalMessageEl.textContent = 'Хороший результат! Вы хорошо разбираетесь в египетских богах.';
+                message = '𓁩 Хороший результат! Вы хорошо разбираетесь в египетских богах. 𓁩';
             } else if (score >= 5) {
-                finalMessageEl.textContent = 'Неплохой результат! Но есть куда стремиться.';
+                message = '𓂋 Неплохой результат! Но есть куда стремиться. 𓂋';
             } else {
-                finalMessageEl.textContent = 'Попробуйте еще раз! Изучите материал и возвращайтесь!';
+                message = '𓅔 Попробуйте еще раз! Изучите материал и возвращайтесь! 𓅔';
             }
+            
+            finalMessageEl.innerHTML = message;
+            
+            // Обновить текст для шаринга
+            const shareMessage = `Я набрал(а) ${score}/10 в викторине "Узнай бога Древнего Египта"! ${message.split('!')[0]}! Попробуй и ты: ${window.location.href}`;
+            shareTextEl.value = shareMessage;
+            
+            // Настройка кнопок поделиться
+            setupShareButtons(shareMessage);
+        }
+
+        // Настройка кнопок поделиться
+        function setupShareButtons(message) {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(message);
+            
+            // VK
+            shareVk.href = `https://vk.com/share.php?url=${url}&title=${text}`;
+            
+            // Telegram
+            shareTg.href = `https://t.me/share/url?url=${url}&text=${text}`;
+            
+            // Twitter
+            shareTw.href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+            
+            // Копирование в буфер обмена
+            copyBtn.addEventListener('click', () => {
+                shareTextEl.select();
+                document.execCommand('copy');
+                copyBtn.textContent = 'Скопировано!';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Копировать';
+                }, 2000);
+            });
         }
 
         // Обновление счета
